@@ -1,6 +1,3 @@
-// const card = document.querySelectorAll('.card');
-
-
 let cardFlipped = false;
 let lockFlip = false;
 let firstCard, secondCard;
@@ -52,9 +49,6 @@ function reset() {
     cardFlipped = false;
     lockFlip = false;
 }
-
-// card.forEach(c => c.addEventListener('click', flipCards));
-
 
 
 
