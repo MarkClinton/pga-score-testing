@@ -23,7 +23,6 @@ function checkforMatch() {
     if (isMatch) {
         setTimeout(() => {
             alert("Its a match");
-            reset();
         }, 1000);
         disableCards();
 
