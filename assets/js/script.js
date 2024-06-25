@@ -1,18 +1,25 @@
+// These should not be global variables. 
 let cardFlipped = false;
 let lockFlip = false;
 let firstCard, secondCard;
 
 function flipCards() {
+    // Pre checks before progressing. Return if not passed. 
     if (lockFlip) return;
     if (this === firstCard) return;
+
+    // If ok, add the flip class to the card that was chosen. 
     this.classList.toggle('flip');
 
+    // On first flip this should be false. Do evertyhing inside if then escape.
     if (!cardFlipped) {
         cardFlipped = true;
         firstCard = this;
         return;
     }
 
+    // After first card is flipped this should be reached and we can check for 
+    // a match
     secondCard = this;
     lockFlip = true;
     checkforMatch();
@@ -50,27 +57,26 @@ function reset() {
 }
 
 
-
 function startGame(gameMode) {
 
     console.log(gameMode);
 
     const cardFace = "assets/images/BoC.jpeg";
 
-
-
+    // Should be constant as it never changes. But it is edited? Hmm..
     let cardContent = {
         king: "assets/images/KoH.jpeg",
         queen: "assets/images/QoH.jpeg",
         jack: "assets/images/JoH.png",
         ten: "assets/images/ToH.png"
     };
-
+    // Additional cards if they choose hard mode
     let hardMode = {
         nine: "assets/images/NoH.png",
         eight: "assets/images/EoH.png"
     }
 
+    // Re-assign cardContent object to be both cardContent & hardMode
     if (gameMode === "hard") {
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
         cardContent = Object.assign(cardContent, hardMode);
@@ -97,38 +103,10 @@ function startGame(gameMode) {
     newCardBack.classList.add("back-face");
     newCardBack.src = cardFace;
 
-
+    // See if there is a better solution to "duplicate" cards in gameArea
     for (let i = 0; i < 2; i++) {
         addMultipleCards(cardContent, newCardDiv, newCardContent, gameArea, newCardBack);
     }
-
-
-
-
-    // // Old Loop
-    // // Loop through the number of cards to be created and append to game-area
-    // for (let i = 0; i < 8; i++) {
-
-    //     // cloneNode() is use because we want to add a new element to the DOM
-    //     // each time. If we dont we just append the same element multiple times,
-    //     // moving it in the DOM.
-
-    //     // No Idea how I got the below to work. Trial and Error. Surely a better way?
-
-    //     // I think its this, It still executes the appendChild() and adds it to 
-    //     // the DOM. Then appendChild() returns the newly appended node. 
-    //     // In this case its the 'div class="card"' then using that append 
-    //     // variable we can append both images to that div. 
-
-    //     let append = gameArea[0].appendChild(newCardDiv.cloneNode());
-    //     append.appendChild(newCardContent.cloneNode());
-    //     append.appendChild(newCardBack.cloneNode());
-
-    //     // Element is created but doesnt have any eventListener. give it eventListener.
-    //     append.addEventListener('click', flipCards);
-
-
-    // }
 }
 
 function addMultipleCards(cards, newCardDiv, newCardContent, gameArea, newCardBack) {
@@ -136,11 +114,28 @@ function addMultipleCards(cards, newCardDiv, newCardContent, gameArea, newCardBa
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
     for (const [key, value] of Object.entries(cards)) {
 
+        // Set the card div to have a data-card attribute and the source of the
+        // img element 
         newCardDiv.dataset.card = key;
         newCardContent.src = value;
 
+        // Generate random number between 1 and the length of the object. Ideally. 
+        // Currently its set to 12 and needs to be refactored. 
         let ramdomPos = Math.floor(Math.random() * 12);
+        // Give the card div a flex order style with that random number
         newCardDiv.style.order = ramdomPos;
+
+        // cloneNode() is use because we want to add a new element to the DOM
+        // each time. If we dont we just append the same element multiple times,
+        // moving it in the DOM.
+
+        // This was very much trial and error. 
+        // If I didnt assign the game area to a variable it would never allow me
+        // to append img elements inside it.
+        // 
+        // appendChild() on the gameArea appends the card div to the DOM
+        // appendChild() returns that new element to the append varibale. 
+        // using that varibale we then assing both img elements to it 
 
         let append = gameArea[0].appendChild(newCardDiv.cloneNode());
         append.appendChild(newCardContent.cloneNode());
