@@ -61,19 +61,19 @@ function startGame(gameMode) {
 
     console.log(gameMode);
 
-    const cardFace = "assets/images/BoC.jpeg";
+    const cardFace = "assets/images/back_of_card.jpg";
 
     // Should be constant as it never changes. But it is edited? Hmm..
     let cardContent = {
-        king: "assets/images/KoH.jpeg",
-        queen: "assets/images/QoH.jpeg",
-        jack: "assets/images/JoH.png",
-        ten: "assets/images/ToH.png"
+        king: "assets/images/golfers/john_daly.png",
+        queen: "assets/images/golfers/robert_macIntyre.png",
+        jack: "assets/images/golfers/rory_mcilroy.png",
+        ten: "assets/images/golfers/sahith_theegala.png"
     };
     // Additional cards if they choose hard mode
     let hardMode = {
-        nine: "assets/images/NoH.png",
-        eight: "assets/images/EoH.png"
+        nine: "assets/images/golfers/shane_lowry.png",
+        eight: "assets/images/golfers/tiger_woods.png"
     }
 
     // Re-assign cardContent object to be both cardContent & hardMode
@@ -83,6 +83,7 @@ function startGame(gameMode) {
     }
 
     // Get the game-area class that the card div is going to be contained in
+    // Should be constant
     let gameArea = document.getElementsByClassName("game-area");
 
     // Specify a new card div to be created
@@ -99,6 +100,7 @@ function startGame(gameMode) {
     // add the source to the img 
     //newCardContent.src = cardContent.jack;
 
+    // Keep as let
     let newCardBack = document.createElement("img");
     newCardBack.classList.add("back-face");
     newCardBack.src = cardFace;
